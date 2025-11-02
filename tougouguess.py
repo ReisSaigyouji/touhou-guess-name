@@ -11,6 +11,7 @@ class GameGUI:
 
         self.name = random.choice(names)
         self.guess = "_" * len(self.name)
+        self.used = []
         # state of word
         self.word_label = tk.Label(root, text=" ".join(self.guess), font=("Arial", 24))
         self.word_label.pack(pady = 10)
@@ -57,3 +58,8 @@ class GameGUI:
             self.message_label.config(text="There is no such letter!")
 
 
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    game = GameGUI(root)
+    root.mainloop()
