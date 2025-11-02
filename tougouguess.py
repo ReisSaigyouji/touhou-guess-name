@@ -3,18 +3,23 @@ import tkinter as tk
 
 names = ["REIMU", "MARISA", "RUMIA", "CIRNO", "DAIYOUSEI", "MEILING",
          "KOAKUMA", "PATCHOULI", "SAKUYA", "REMILIA", "FLANDRE", "LETTY", "CHEN", "LILY", "CHEN", "ALICE",
-         "MERLIN", "LYRICA", "LINASA", "YOUMU", "YUYUKO", "RAN", "YUKARI"]
+         "MERLIN", "LYRICA", "LUNASA", "YOUMU", "YUYUKO", "RAN", "YUKARI"]
 
 class GameGUI:
     def __init__(self, root):
         self.root = root
         root.title("Touhou Guessing Game")
-        root.geometry("400x230")
+        root.geometry("400x260")
         root.resizable(False, False)
-
+        # general things
         self.name = random.choice(names)
         self.guess = "_" * len(self.name)
         self.used = []
+        self.lives = 5
+
+        # lives
+        self.lives_label = tk.Label(root, text="❤️" * self.lives, font=("Arial", 18))
+        self.lives_label.pack(anchor="ne", padx=10, pady=10)
         # state of word
         self.word_label = tk.Label(root, text=" ".join(self.guess), font=("Arial", 24))
         self.word_label.pack(pady = 10)
@@ -35,6 +40,7 @@ class GameGUI:
 
         # the thing so the Enter works as submit
         self.entry.bind('<Return>', lambda event: self.check_letter())
+
 
     def check_letter(self):
         letter = self.entry.get().upper()
@@ -66,7 +72,14 @@ class GameGUI:
                 self.button.config(state=tk.DISABLED)
                 self.play_again_button.pack() # show the play again button
         else:
-            self.message_label.config(text="There is no such letter!")
+            self.lives -= 1
+            self.update_hearts()
+            if self.lives == 0:
+                self.message_label.config(text=f"You lost! The name was {self.name}")
+                self.button.config(state="disabled")
+                self.play_again_button.pack()
+            else:
+                self.message_label.config(text="There is no such letter!")
 
     # added all that so you can replay without restarting everything
     def reset_game(self):
@@ -80,6 +93,15 @@ class GameGUI:
         self.play_again_button.pack_forget()
         self.entry.delete(0, tk.END)
         self.entry.focus()
+        # lives reset
+        self.lives = 5
+        self.lives_label.config(text=f"Lives: {self.lives}")
+        self.update_hearts()
+
+    # to display lives
+    def update_hearts(self):
+        self.lives_label.config(text="❤️" * self.lives)
+
 
 # It's done finally yey yippie
 if __name__ == "__main__":
