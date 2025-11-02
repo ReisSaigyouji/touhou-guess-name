@@ -8,6 +8,8 @@ class GameGUI:
     def __init__(self, root):
         self.root = root
         root.title("Touhou Guessing Game")
+        root.geometry("400x200")
+        root.resizable(False, False)
 
         self.name = random.choice(names)
         self.guess = "_" * len(self.name)
