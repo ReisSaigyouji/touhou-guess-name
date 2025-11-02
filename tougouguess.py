@@ -27,6 +27,8 @@ class GameGUI:
         # message field
         self.message_label = tk.Label(root, text=" ", font=("Arial", 14))
         self.message_label.pack(pady=10)
+        # the thing so the Enter works as submit
+        self.entry.bind('<Return>', lambda event: self.check_letter())
 
     def check_letter(self):
         letter = self.entry.get().upper()
