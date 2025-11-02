@@ -2,13 +2,14 @@ import random
 import tkinter as tk
 
 names = ["REIMU", "MARISA", "RUMIA", "CIRNO", "DAIYOUSEI", "MEILING",
-         "KOAKUMA", "PATCHOULI", "SAKUYA", "REMILIA", "FLANDRE"]
+         "KOAKUMA", "PATCHOULI", "SAKUYA", "REMILIA", "FLANDRE", "LETTY", "CHEN", "LILY", "CHEN", "ALICE",
+         "MERLIN", "LYRICA", "LINASA", "YOUMU", "YUYUKO", "RAN", "YUKARI"]
 
 class GameGUI:
     def __init__(self, root):
         self.root = root
         root.title("Touhou Guessing Game")
-        root.geometry("400x200")
+        root.geometry("400x230")
         root.resizable(False, False)
 
         self.name = random.choice(names)
@@ -67,7 +68,7 @@ class GameGUI:
         else:
             self.message_label.config(text="There is no such letter!")
 
-    # added all that so you can replay withou restarting everything
+    # added all that so you can replay without restarting everything
     def reset_game(self):
         self.name = random.choice(names)
         self.guess = "_" * len(self.name)
