@@ -21,12 +21,17 @@ class GameGUI:
         self.entry = tk.Entry(root, font=("Arial", 18), width=5)
         self.entry.pack()
         self.entry.focus()
-        # funny button
+        # submit button
         self.button = tk.Button(root, text="guess", command=self.check_letter)
         self.button.pack(pady = 5)
         # message field
         self.message_label = tk.Label(root, text=" ", font=("Arial", 14))
         self.message_label.pack(pady=10)
+        # play again button
+        self.play_again_button = tk.Button(root, text="Play Again", command=self.reset_game)
+        self.play_again_button.pack(pady=10)
+        self.play_again_button.pack_forget()  # hide it for now
+
         # the thing so the Enter works as submit
         self.entry.bind('<Return>', lambda event: self.check_letter())
 
@@ -58,9 +63,22 @@ class GameGUI:
             if self.guess == self.name:
                 self.message_label.config(text=f"That's right! It's {self.name}")
                 self.button.config(state=tk.DISABLED)
+                self.play_again_button.pack() # show the play again button
         else:
             self.message_label.config(text="There is no such letter!")
 
+    # added all that so you can replay withou restarting everything
+    def reset_game(self):
+        self.name = random.choice(names)
+        self.guess = "_" * len(self.name)
+        self.used = []
+        # reset display
+        self.word_label.config(text=" ".join(self.guess))
+        self.message_label.config(text="")
+        self.button.config(state=tk.NORMAL)
+        self.play_again_button.pack_forget()
+        self.entry.delete(0, tk.END)
+        self.entry.focus()
 
 
 if __name__ == "__main__":
