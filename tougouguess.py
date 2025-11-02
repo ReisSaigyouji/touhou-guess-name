@@ -80,7 +80,7 @@ class GameGUI:
         self.entry.delete(0, tk.END)
         self.entry.focus()
 
-
+# It's done finally yey yippie
 if __name__ == "__main__":
     root = tk.Tk()
     game = GameGUI(root)
